@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0A2A66">
+<title>SUKO mBANGUN DESO</title>
+<meta name="description" content="Monitoring dan evaluasi pembangunan desa se-Kecamatan Sukodono">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230A2A66'/%3E%3Cpath d='M12 52h40M16 52V26l16-12 16 12v26M26 52V38h12v14' fill='none' stroke='%23F6B91A' stroke-width='5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<style>
+  :root{--navy:#0A2A66;--blue:#1757C2;--gold:#F6B91A;--gold2:#FFE08A}
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%;background:var(--navy);overflow:hidden;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+  #app{position:fixed;inset:0;width:100%;height:100%;border:0;background:#fff;opacity:0;transition:opacity .35s}
+  #app.ready{opacity:1}
+  #splash{position:fixed;inset:0;display:grid;place-items:center;text-align:center;color:#fff;
+    background:linear-gradient(160deg,var(--navy),var(--blue));transition:opacity .35s,visibility .35s;padding:24px}
+  #splash.done{opacity:0;visibility:hidden}
+  .spin{width:48px;height:48px;border-radius:50%;border:5px solid rgba(255,224,138,.35);border-top-color:var(--gold);margin:0 auto 18px;animation:r .8s linear infinite}
+  @keyframes r{to{transform:rotate(360deg)}}
+  h1{font-size:22px;letter-spacing:.01em}
+  p{color:#CFE0FF;margin-top:6px;font-size:14px}
+  #slow{display:none;margin-top:22px}
+  #slow.show{display:block}
+  a.btn{display:inline-block;margin-top:10px;padding:10px 18px;border-radius:10px;background:var(--gold);color:var(--navy);font-weight:700;text-decoration:none}
+  @media(prefers-reduced-motion:reduce){.spin{animation:none}}
+</style>
+</head>
+<body>
+
+<div id="splash">
+  <div>
+    <div class="spin" role="status" aria-label="Memuat"></div>
+    <h1>SUKO mBANGUN DESO</h1>
+    <p>Memuat aplikasi…</p>
+    <div id="slow">
+      <p>Pemuatan lebih lama dari biasanya.</p>
+      <a class="btn" id="direct" target="_blank" rel="noopener">Buka langsung di tab baru</a>
+    </div>
+  </div>
+</div>
+
+<iframe id="app" title="SUKO mBANGUN DESO" allow="fullscreen; clipboard-write"
+        referrerpolicy="strict-origin-when-cross-origin"></iframe>
+
+<script>
+  // ============================================================
+  // UBAH HANYA BARIS INI: tempel URL Web App dari Apps Script
+  // (Deploy > Kelola deployment > URL aplikasi web, berakhiran /exec)
+  // ============================================================
+  var GAS_URL = 'https://script.google.com/macros/s/AKfycbyivSKeZ4KQFYpyNabfUvUMmhkmP0kNQ85jWSrhTDIY5itO8xhjx3usj9W8lmFmOZSV/exec';
+
+  var frame = document.getElementById('app');
+  var splash = document.getElementById('splash');
+  document.getElementById('direct').href = GAS_URL;
+
+  frame.addEventListener('load', function () {
+    frame.classList.add('ready');
+    splash.classList.add('done');
+  });
+  frame.src = GAS_URL;
+
+  // Jika lebih dari 8 detik belum selesai, tawarkan buka langsung
+  setTimeout(function () {
+    if (!splash.classList.contains('done')) document.getElementById('slow').classList.add('show');
+  }, 8000);
+</script>
+</body>
+</html>
